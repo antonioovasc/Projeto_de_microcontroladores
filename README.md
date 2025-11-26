@@ -1,16 +1,29 @@
-🛠️ Projetos de Microcontroladores
+<h1>🛠️ Projetos de Microcontroladores</h1>
 
-Bem-vindo ao repositório Projetos de Microcontroladores!
-Este repositório reúne uma coleção de projetos desenvolvidos com microcontroladores, utilizando simulações e prototipagem no Wokwi.
-O objetivo é centralizar, organizar e facilitar o acesso aos projetos, além de permitir expansão futura com novos links.
+<p>
+  Bem-vindo ao repositório <strong>Projetos de Microcontroladores</strong>!<br>
+  Este repositório reúne uma coleção de projetos desenvolvidos com microcontroladores, utilizando simulações e prototipagem no <strong>Wokwi</strong>.<br>
+  O objetivo é centralizar, organizar e facilitar o acesso aos projetos, além de permitir expansão futura com novos links.
+</p>
 
-📂 Índice de Projetos
-🔹 1. Porta com Sensor de Proximidade
+<hr>
 
-Simulação de uma porta automática que utiliza um sensor de proximidade para detectar a presença de objetos/pessoas e acionar uma porta.
-🔗 Acessar projeto: https://wokwi.com/projects/448620777839790081
+<h2>📂 Índice de Projetos</h2>
 
-🔹 2. Varal Automático
+<h3>🔹 1. Porta com Sensor de Proximidade</h3>
+<p>
+  Simulação de uma porta automática que utiliza um sensor de proximidade para detectar a presença de objetos/pessoas e acionar uma porta.<br>
+  🔗 <strong>Acessar projeto:</strong> 
+  <a href="https://wokwi.com/projects/448620777839790081">https://wokwi.com/projects/448620777839790081</a>
+</p>
 
-Um sistema automatizado que recolhe roupas de um varal com base na detecção de chuva ou controle programado.
-🔗 Acessar projeto: https://wokwi.com/projects/448679863058845697
+<hr>
+
+<h3>🔹 2. Varal Automático</h3>
+<p>
+  Um sistema automatizado que recolhe roupas de um varal com base na detecção de chuva ou controle programado.<br>
+  🔗 <strong>Acessar projeto:</strong> 
+  <a href="https://wokwi.com/projects/448679863058845697">https://wokwi.com/projects/448679863058845697</a>
+</p>
+
+<hr>
