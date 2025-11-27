@@ -27,3 +27,14 @@
 </p>
 
 <hr>
+
+<h2>🎥 Vídeo Explicativo dos Projetos</h2>
+<p>
+  Para uma explicação detalhada dos projetos apresentados, assista ao vídeo no link abaixo:<br>
+  🔗 <strong>Acessar vídeo:</strong>
+  <a href="https://drive.google.com/file/d/1Aau1jqP2Rd85IPOpbl81hUDn7mr385n-/view?usp=sharing">
+    Clique aqui para assistir
+  </a>
+</p>
+
+<hr>
