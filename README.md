@@ -38,3 +38,14 @@
 </p>
 
 <hr>
+
+<h2>📑 Slide de Apresentação</h2>
+<p>
+  Acesse o slide utilizado para apresentar os projetos:<br>
+  🔗 <strong>Acessar slide:</strong>
+  <a href="https://www.canva.com/design/DAG5hpgmfGE/KsJTqV66D9We7qD5q3i_Xg/edit?utm_content=DAG5hpgmfGE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
+    Clique aqui para visualizar o slide
+  </a>
+</p>
+
+<hr>
