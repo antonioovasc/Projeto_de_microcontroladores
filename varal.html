@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Controle de Varal Inteligente</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; background-color: #f0f8ff; }
+        .container { max-width: 450px; margin: auto; padding: 25px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); background-color: #ffffff; }
+        h2 { color: #004d99; margin-bottom: 25px; }
+        .data-box { border: 1px solid #cceeff; padding: 15px; margin-top: 15px; border-radius: 8px; background-color: #e9f5ff; }
+        .status-display { margin: 20px 0; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; transition: background-color 0.5s; }
+        .btn-group { margin-top: 20px; display: flex; justify-content: space-around; }
+        .btn { padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: background-color 0.3s; width: 48%; }
+        
+        /* Estilos de Cores */
+        .btn-toggle-auto { background-color: #28a745; color: white; } 
+        .btn-toggle-manual { background-color: #dc3545; color: white; } 
+        .btn-action { background-color: #007bff; color: white; }
+        .btn:hover { opacity: 0.9; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🌤️ Varal Automático ESP32</h2>
+        <div class="data-box">
+            <p>Temperatura: <span id="temp">--</span> °C</p>
+            <p>Umidade: <span id="hum">--</span> %</p>
+            <p style="font-size: 10px; color: #888;">(Valores T/H estão sendo simulados pelo ESP32)</p>
+        </div>
+
+        <div class="status-display" id="status">Verificando Estado...</div>
+        
+        <div class="btn-group">
+            <button class="btn btn-toggle-auto" id="toggleModeBtn" onclick="toggleMode()">Assumir Controle Manual</button>
+        </div>
+
+        <div class="btn-group hidden" id="manualControls">
+            <button class="btn btn-action" id="actionBtn" onclick="toggleAction()">AÇÃO</button>
+        </div>
+        
+    </div>
+
+    <script>
+        const ESP32_IP = "http://IP_DO_SEU_ESP32"; // Substitua pelo IP do seu ESP32
+        
+        // --- Funções de Comunicação ---
+
+        // Envia o comando para a rota /toggle (Alternar modo)
+        function toggleMode() {
+            fetch(ESP32_IP + '/toggle')
+                .then(() => updateReadings())
+                .catch(error => console.error('Erro ao alternar modo:', error));
+        }
+
+        // Envia o comando para a rota /action (Abre ou fecha o varal)
+        function toggleAction() {
+            // No ESP32, a rota /toggle 
+            // inverte o estado do varal (0->1 ou 1->0) no modo manual.
+            fetch(ESP32_IP + '/toggle') 
+                .then(() => updateReadings())
+                .catch(error => console.error('Erro ao enviar ação manual:', error));
+        }
+
+
+        // --- Função Principal de Leitura e Atualização da Interface ---
+        function updateReadings() {
+            fetch(ESP32_IP + '/readings')
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response not ok");
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('temp').innerText = parseFloat(data.T).toFixed(1);
+                    document.getElementById('hum').innerText = parseFloat(data.H).toFixed(1);
+                    
+                    const statusText = data.S;
+                    const isManual = statusText.includes("Manual");
+                    const isOpen = statusText.includes("ABERTO");
+                    
+                    const statusDiv = document.getElementById('status');
+                    const toggleModeBtn = document.getElementById('toggleModeBtn');
+                    const manualControls = document.getElementById('manualControls');
+                    const actionBtn = document.getElementById('actionBtn');
+
+                    // 1. Atualiza o Texto de Status
+                    statusDiv.innerText = `Estado Atual: ${statusText}`;
+
+                    // 2. Lógica do Botão (Alternar Modo)
+                    if (isManual) {
+                        toggleModeBtn.innerText = "Liberar Controle (Voltar p/ Auto)";
+                        toggleModeBtn.classList.replace('btn-toggle-auto', 'btn-toggle-manual');
+                        manualControls.classList.remove('hidden');
+                        statusDiv.style.backgroundColor = "#ffc107"; // Amarelo para Manual
+                    } else {
+                        toggleModeBtn.innerText = "Assumir Controle Manual";
+                        toggleModeBtn.classList.replace('btn-toggle-manual', 'btn-toggle-auto');
+                        manualControls.classList.add('hidden');
+                        
+                        // Cores para o modo Automático
+                        statusDiv.style.backgroundColor = isOpen ? "#a8e6cf" : "#ffc107"; // Verde ou Amarelo
+                    }
+
+                    // 3. Lógica do Botão de Ação (Apenas em Manual)
+                    if (isManual) {
+                        // Quando em Manual, o botão de Ação inverte o estado atual.
+                        if (isOpen) {
+                            actionBtn.innerText = "FECHAR VARAL";
+                            actionBtn.classList.remove('btn-action-open');
+                        } else {
+                            actionBtn.innerText = "ABRIR VARAL";
+                            actionBtn.classList.add('btn-action-open');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Falha na comunicação com o ESP32:', error);
+                    document.getElementById('status').innerText = 'ERRO: ESP32 OFFLINE ou FALHA CORS';
+                    document.getElementById('status').style.backgroundColor = 'red';
+                });
+        }
+
+        // Atualização contínua a cada 2 segundos
+        setInterval(updateReadings, 2000); 
+        updateReadings(); 
+    </script>
+</body>
+</html>
